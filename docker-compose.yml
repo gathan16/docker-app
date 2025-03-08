@@ -1,0 +1,33 @@
+
+services:
+  app:
+    build: .
+    container_name: kontainer
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong!Passw0rd
+      - DB_HOST=db
+      - DB_NAME=TestDB
+    networks:
+      - my_network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server
+    environment:
+      SA_PASSWORD: "Muhgat2005"
+      ACCEPT_EULA: "Y"
+    networks:
+      - my_network
+    volumes:
+      - sql_data:/var/opt/mssql
+
+networks:
+  my_network:
+
+volumes:
+  sql_data:
